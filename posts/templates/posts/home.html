@@ -1,18 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+{% extends "posts/base.html" %}
+ {% comment %} {% block content %} {% endcomment %}
 
-    <h1>Message board homepage</h1>
-    <ul>
-    {% for post in post_list %}
-    <li>{{ post.text }}</li>
-    {% endfor %}
-    </ul>
-</body>
-</html>
+{% comment %} <h1>Message board homepage</h1>
+<ul>
+  {% for post in post_list %}
+  <li>{{ post.title }} | {{post.author.username}}</li>
+  {% endfor %}
+</ul> {% endcomment %}
+
+
+
+{% comment %} {% extends "posts/base.html" %} {% endcomment %}
+{% block content %}
+{% for post in post_list %}
+<div class="post-entry">
+<h2>
+  {% comment %} <a href="/posts/{{post.id}}"> {% endcomment %}
+  {% comment %} <a href="{% url "posts_detail" pk=post.pk %}"> {% endcomment %}
+    <a href="{{post.get_absolute_url}}">
+    {{ post.title }}
+  </a></h2>
+<p>{{ post.text }}</p>
+</div>
+{% endfor %}
+{% endblock content %}
+
+
+{% comment %} {% endblock content %} {% endcomment %}
