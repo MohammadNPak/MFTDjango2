@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # 'pages',
     "pages.apps.PagesConfig",
     "posts.apps.PostsConfig",
+    "accounts.apps.AccountsConfig"
 ]
 
 MIDDLEWARE = [
@@ -123,5 +124,11 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+STATIC_ROOT = BASE_DIR / "staticroot"
+
 
 LOGIN_REDIRECT_URL = reverse_lazy("posts_home")
+LOGOUT_REDIRECT_URL = reverse_lazy("login") 
+
+
+AUTH_USER_MODEL = "accounts.CustomUser"
