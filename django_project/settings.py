@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     "pages.apps.PagesConfig",
     "posts.apps.PostsConfig",
-    "accounts.apps.AccountsConfig"
+    "accounts.apps.AccountsConfig",
+    "articles.apps.ArticlesConfig",
 ]
 
 
@@ -120,7 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -139,7 +140,7 @@ STATIC_ROOT = BASE_DIR / "staticroot"
 
 LOGIN_REDIRECT_URL = reverse_lazy("posts_home")
 LOGOUT_REDIRECT_URL = reverse_lazy("login") 
-
+# LOGIN_URL = 
 
 AUTH_USER_MODEL = "accounts.CustomUser"
 
