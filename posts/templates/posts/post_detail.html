@@ -1,4 +1,7 @@
-{% extends "posts/base.html" %} {% block content %}
+
+{% extends "posts/base.html" %}
+
+{% comment %} {% extends "posts/base.html" %} {% block content %}
 
 <div class="post-entry">
   <span>{{ post.create_at }}</span>
@@ -8,4 +11,138 @@
 </div>
 <a href="{% url 'post_update' post.pk %}">+ Edit Blog Post</a>
 <a href="{% url 'post_delete' post.pk %}">- Delete Blog Post</a>
+{% endblock content %} {% endcomment %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}{{ post.title }} | Django Blog{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-5">
+
+                <!-- Meta -->
+                <div class="text-muted small mb-3">
+                    By <strong>{{ post.author.username }}</strong>
+                    • {{ post.create_at|timesince }}
+                </div>
+
+                <!-- Title -->
+                <h1 class="fw-bold mb-4">{{ post.title }}</h1>
+
+                <!-- Content -->
+                <p class="text-secondary fs-5 lh-lg">
+                    {{ post.text }}
+                </p>
+
+                {% if user == post.author %}
+                <hr class="my-4">
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'post_update' post.pk %}"
+                       class="btn btn-outline-primary rounded-pill px-4">
+                        ✏ Edit
+                    </a>
+
+                    <a href="{% url 'post_delete' post.pk %}"
+                       class="btn btn-outline-danger rounded-pill px-4">
+                        🗑 Delete
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+
+ 
+
+
+            <!-- Comments Section -->
+<div class="row justify-content-center mt-5">
+  <div class="col-lg-8">
+
+
+
+
+
+
+<!-- Add Comment -->
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-4">
+
+        <h5 class="fw-bold mb-3">Leave a Comment</h5>
+
+        {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+
+                <div class="d-grid mt-3">
+                    <button type="submit"
+                            class="btn btn-primary rounded-pill">
+                        submit
+                    </button>
+                </div>
+            </form>
+        {% else %}
+            <p class="text-muted mb-0">
+                Please <a href="{% url 'login' %}">login</a> to write a comment.
+            </p>
+        {% endif %}
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<span class="fw-bold mb-4">
+  Comments ({{ post.comment_set.count }})
+</span>
+
+      {% for comment in post.comment_set.all |  %}
+          <div class="card border-0 shadow-sm rounded-4 mb-3">
+              <div class="card-body p-4">
+
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                      <strong>{{ comment.author }}</strong>
+                      <small class="text-muted">
+                          {{ comment.create_at|timesince  }} ago
+                      </small>
+                  </div>
+
+                  <p class="text-secondary mb-0">
+                      {{ comment.text }}
+                  </p>
+
+              </div>
+          </div>
+      {% empty %}
+          <div class="card border-0 shadow-sm rounded-4 text-center p-4">
+              <p class="text-muted mb-0">
+                  No comments yet. Be the first to comment ✨
+              </p>
+          </div>
+      {% endfor %}
+
+  </div>
+</div>
+
+
+
+
+
+
+        </div>
+
+    </div>
+</div>
+
 {% endblock content %}
