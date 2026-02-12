@@ -39,11 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "django.contrib.sites",
     # 'pages',
+    "crispy_forms", # new
+    "crispy_bootstrap5", # new
+
+
     "pages.apps.PagesConfig",
     "posts.apps.PostsConfig",
     "accounts.apps.AccountsConfig"
 ]
+
+
+
+SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,3 +142,14 @@ LOGOUT_REDIRECT_URL = reverse_lazy("login")
 
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5" # new
+CRISPY_TEMPLATE_PACK = "bootstrap5" # new
+
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+
+# http://127.0.0.1:8000/accounts/reset/MQ/d3jhlh-6e763a1dbaec5e50cf204a174094d7=c9
